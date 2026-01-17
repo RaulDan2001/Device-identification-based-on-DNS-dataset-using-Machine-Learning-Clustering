@@ -229,6 +229,14 @@ class DNSFeatureEngineer:
             features.append(device_features)
         
         self.features_df = pd.DataFrame(features)
+
+        nan_counts = self.features_df.isna().sum()
+        if nan_counts.any():
+            print("\nWARNING: Found NaN values in features:")
+            print(nan_counts[nan_counts > 0])
+            print("Filling NaN values with 0...")
+            self.features_df = self.features_df.fillna(0.0)
+
         print(f"INFO: Engineered {len(self.features_df.columns)-1} features for {len(self.features_df)} devices")
 
         return self.features_df
