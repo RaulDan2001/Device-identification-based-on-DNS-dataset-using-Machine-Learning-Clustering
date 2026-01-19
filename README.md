@@ -465,7 +465,11 @@ See `documentation/project_documentation.md` for detailed implementation suggest
 
 ## Performance Benchmarks
 
-The following benchmarks were measured on typical hardware with Intel i5/i7 CPU, 16GB RAM, and SSD storage:
+The following benchmarks were measured on a typical development machine with the following specifications:
+- **CPU**: Intel Core i5-10400 (6 cores, 2.9GHz base clock) or equivalent
+- **RAM**: 16GB DDR4
+- **Storage**: NVMe SSD
+- **OS**: Windows 10 / Linux Ubuntu 20.04
 
 | Script | Dataset Size | Execution Time | Memory Usage |
 |--------|--------------|----------------|--------------|
@@ -475,12 +479,12 @@ The following benchmarks were measured on typical hardware with Intel i5/i7 CPU,
 | enrich_dns_dataset.py | 584k rows | 10-20 seconds | ~1 GB |
 | random_forest_classifier.py | 584k rows | 2-5 minutes | ~2 GB |
 
-**Note**: Actual performance may vary based on your hardware configuration. Systems with slower CPUs or HDDs may experience longer execution times.
+**Note**: Actual performance will vary based on your hardware configuration. Systems with slower CPUs, less RAM, or HDDs may experience significantly longer execution times.
 
-**Recommended Hardware:**
-- CPU: Intel i5/i7 or equivalent
-- RAM: 8 GB minimum (16 GB recommended)
-- Storage: SSD recommended
+**Recommended Minimum Hardware:**
+- CPU: Intel i5 (8th gen or newer) / AMD Ryzen 5 or equivalent
+- RAM: 8 GB minimum (16 GB recommended for smooth operation)
+- Storage: SSD strongly recommended for faster I/O operations
 
 ---
 
