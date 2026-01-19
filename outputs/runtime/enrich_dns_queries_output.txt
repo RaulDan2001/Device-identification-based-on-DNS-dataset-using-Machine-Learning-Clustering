@@ -1,0 +1,13 @@
+INFO: Loading datasets...
+  Loaded 584,789 DNS queries
+  Loaded 32 devices with features + clusters
+
+INFO: Merging device features to queries...
+INFO: Adding query-level temporal features...
+
+INFO: Enriched dataset created:
+  Total queries: 584,789
+  Total columns: 33
+  Columns: ['mac', 'domain', 'qtype', 'timestamp', 'total_queries', 'unique_domains', 'domain_diversity_ratio', 'qtype_1_count', 'qtype_28_count', 'qtype_other_count', 'qtype_1_ratio', 'qtype_28_ratio', 'active_hours', 'active_days', 'time_span_seconds', 'time_span_hours', 'queries_per_hour', 'avg_query_interval', 'std_query_interval', 'min_query_interval', 'max_query_interval', 'median_query_interval', 'top_domain_frequency', 'top_domain_ratio', 'peak_hour_queries', 'peak_hour_ratio', 'domain_entropy', 'query_burstiness', 'weekend_query_ratio', 'cluster', 'hour', 'day_of_week', 'is_weekend']
+
+INFO: Saved enriched queries to e:\school\Masterat\AI in sisteme de securitate informatica\Proiect2\datasets\enriched_dns_queries.csv

@@ -1,0 +1,41 @@
+INFO:Loading dataset from x:\...\project_dir\datasets\dns_dataset.csv...
+INFO: Loaded 584789 DNS queries
+DEBUG: Columns ['mac', 'domain', 'qtype', 'timestamp']
+INFO: Saved queries per device plot
+INFO: Saved query type distribution plot
+INFO: Saved unique domains per MAC addresses plot
+INFO: Saved temporal patterns plot
+INFO: Saved top domains plot
+
+============================================================
+DATASET SUMMARY STATISTICS
+============================================================
+Total queries: 584,789
+Unique devices (MACs): 32
+Unique domains: 6,710
+Date range: 2025-09-27 01:46:23 to 2025-11-03 17:52:51
+
+Queries per device - Mean: 18274.66, Median: 4408.50
+Domains per device - Mean: 410.88, Median: 229.00
+============================================================
+
+Engineering features...
+
+WARNING: Found NaN values in features:
+std_query_interval    1
+dtype: int64
+Filling NaN values with 0...
+INFO: Engineered 25 features for 32 devices
+
+INFO: Sample of engineered features
+                                mac  total_queries  unique_domains  domain_diversity_ratio  qtype_1_count  ...  peak_hour_queries  peak_hour_ratio  domain_entropy  query_burstiness  weekend_query_ratio
+0  1093ef9de22486f357396c5b0c37beb4           4242             275                0.064828           4228  ...                758         0.178689    5.715396e+00         52.537798             0.375059    
+1  19b2ec9332c33b73e12691408646795b             28               1                0.035714             28  ...                 20         0.714286   -1.442695e-10          0.280064             0.285714    
+2  20979bf8e363e1bae629cdb88fd16668            132               4                0.030303            132  ...                 53         0.401515    9.412410e-01          0.901566             0.310606    
+3  20bf46bf76672bb70f9ab950cf8683fe          64026            2818                0.044013          43754  ...              10182         0.159029    9.177952e+00         23.370044             0.456065    
+4  3696c9ac3bd67ac15243a7cd8d87311c           3742             342                0.091395           2864  ...                547         0.146179    6.265937e+00         41.149471             0.000000    
+
+[5 rows x 26 columns]
+
+INFO: Feature columns: ['mac', 'total_queries', 'unique_domains', 'domain_diversity_ratio', 'qtype_1_count', 'qtype_28_count', 'qtype_other_count', 'qtype_1_ratio', 'qtype_28_ratio', 'active_hours', 'active_days', 'time_span_seconds', 'time_span_hours', 'queries_per_hour', 'avg_query_interval', 'std_query_interval', 'min_query_interval', 'max_query_interval', 'median_query_interval', 'top_domain_frequency', 'top_domain_ratio', 'peak_hour_queries', 'peak_hour_ratio', 'domain_entropy', 'query_burstiness', 'weekend_query_ratio']
+INFO: Features saved to x:\...\project_dir\datasets\datasets\device_features.csv
