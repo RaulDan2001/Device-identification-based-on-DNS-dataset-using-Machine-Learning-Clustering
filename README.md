@@ -465,6 +465,8 @@ See `documentation/project_documentation.md` for detailed implementation suggest
 
 ## Performance Benchmarks
 
+The following benchmarks were measured on typical hardware with Intel i5/i7 CPU, 16GB RAM, and SSD storage:
+
 | Script | Dataset Size | Execution Time | Memory Usage |
 |--------|--------------|----------------|--------------|
 | pkl_converter.py | 584k rows | 5-10 seconds | ~500 MB |
@@ -472,6 +474,8 @@ See `documentation/project_documentation.md` for detailed implementation suggest
 | kmeans_clustering.py | 32 devices | 10-30 seconds | ~100 MB |
 | enrich_dns_dataset.py | 584k rows | 10-20 seconds | ~1 GB |
 | random_forest_classifier.py | 584k rows | 2-5 minutes | ~2 GB |
+
+**Note**: Actual performance may vary based on your hardware configuration. Systems with slower CPUs or HDDs may experience longer execution times.
 
 **Recommended Hardware:**
 - CPU: Intel i5/i7 or equivalent
@@ -519,6 +523,6 @@ For questions or issues, please refer to the troubleshooting guide in the docume
 
 ---
 
-**Last Updated**: January 2026  
+**Last Updated**: January 19, 2026  
 **Version**: 1.0  
 **Status**: Production-Ready ✅
