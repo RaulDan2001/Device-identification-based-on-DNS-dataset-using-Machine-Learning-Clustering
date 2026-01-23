@@ -42,98 +42,6 @@ class DNSRandomForestClassifier:
         
         return self.queries_df, self.devices_df
     
-    def validate_device_features_with_cv(self, n_folds=5):
-        """
-        Validate feature engineering quality using Cross-Validation on device-level data
-        This validates that engineered features capture device behavior patterns
-        """
-        print(f"\n{'='*70}")
-        print("DEVICE-LEVEL VALIDATION (Cross-Validation)")
-        print(f"{'='*70}")
-        
-        # Prepare device-level data
-        device_features = [col for col in self.devices_df.columns if col not in ['mac']]
-        X_devices = self.devices_df[device_features].values
-        y_devices = LabelEncoder().fit_transform(self.devices_df['mac'])
-        
-        print(f"\nINFO: Device-level dataset:")
-        print(f"  Samples: {len(X_devices)} devices")
-        print(f"  Features: {len(device_features)}")
-        print(f"  Classes: {len(np.unique(y_devices))} unique devices")
-        
-        # Check if we can do stratified K-fold
-        n_samples = len(X_devices)
-        
-        # Adjust n_folds if needed
-        if n_samples < n_folds:
-            n_folds = n_samples
-            print(f"\nWARNING: Adjusted n_folds to {n_folds} (equal to number of samples)")
-        
-        # Train temporary model for CV
-        temp_model = RandomForestClassifier(
-            n_estimators=100,
-            max_depth=10,
-            random_state=42,
-            n_jobs=-1
-        )
-        
-        # Use regular cross_val_score (Leave-One-Out style for small datasets)
-        print(f"\nINFO: Performing {n_folds}-Fold Cross-Validation on device features...")
-        print(f"NOTE: Using Leave-One-Out CV due to single sample per class")
-        
-        from sklearn.model_selection import KFold
-        kf = KFold(n_splits=n_folds, shuffle=True, random_state=42)
-        
-        cv_scores = []
-        fold_num = 1
-        
-        for train_idx, test_idx in kf.split(X_devices):
-            X_train_fold, X_test_fold = X_devices[train_idx], X_devices[test_idx]
-            y_train_fold, y_test_fold = y_devices[train_idx], y_devices[test_idx]
-            
-            temp_model.fit(X_train_fold, y_train_fold)
-            fold_score = temp_model.score(X_test_fold, y_test_fold)
-            cv_scores.append(fold_score)
-            
-            print(f"  Fold {fold_num}: Accuracy = {fold_score:.4f} ({fold_score*100:.2f}%) - Test size: {len(test_idx)} devices")
-            fold_num += 1
-        
-        cv_scores = np.array(cv_scores)
-        
-        print(f"\n{'='*70}")
-        print("DEVICE-LEVEL CV RESULTS:")
-        print(f"{'='*70}")
-        print(f"  Mean CV Accuracy: {cv_scores.mean():.4f} ({cv_scores.mean()*100:.2f}%)")
-        print(f"  Std Deviation: ± {cv_scores.std():.4f}")
-        print(f"  Range: {cv_scores.min():.3f} - {cv_scores.max():.3f}")
-        print(f"  Confidence Interval (95%): {cv_scores.mean():.3f} ± {1.96 * cv_scores.std():.3f}")
-        print(f"{'='*70}")
-        
-        # Interpretation
-        if cv_scores.mean() > 0.7:
-            print("RESULT: Features effectively capture device behavior!")
-        elif cv_scores.mean() > 0.5:
-            print("RESULT: Features capture some patterns, but could be improved")
-        else:
-            print("RESULT: Features may not be discriminative enough")
-        
-        # Feature importance from last fold
-        feature_importance = pd.DataFrame({
-            'feature': device_features,
-            'importance': temp_model.feature_importances_
-        }).sort_values('importance', ascending=False)
-        
-        print(f"\nTop 10 Most Important Features (from last CV fold):")
-        for idx, row in feature_importance.head(10).iterrows():
-            print(f"  {row['feature']}: {row['importance']:.4f}")
-        
-        return {
-            'cv_scores': cv_scores,
-            'mean_accuracy': cv_scores.mean(),
-            'std_accuracy': cv_scores.std(),
-            'feature_importance': feature_importance
-        }
-    
     def prepare_query_level_dataset(self, test_size=0.3, random_state=42, min_queries_per_device=2):
         """
         Prepare query-level dataset for train/test split
@@ -493,9 +401,6 @@ if __name__ == "__main__":
     
     # Load data
     rf_classifier.load_data()
-    
-    # PHASE 1: Validate device features with Cross-Validation
-    #cv_results = rf_classifier.validate_device_features_with_cv(n_folds=5)
     
     # PHASE 2: Prepare query-level dataset
     rf_classifier.prepare_query_level_dataset(test_size=0.3, random_state=42)
